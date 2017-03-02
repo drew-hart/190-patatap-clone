@@ -6,7 +6,31 @@
   <meta name="description" content="DESCRIPTION">
   <script type="text/javascript" src="assets/js/paper-full.js"></script>
   <script type="text/paperscript" canvas="myCanvas">
-
+    var colors = [
+          "#d38a6c",
+          "#b98529",
+          "#918a0e",
+          "#c3aecd",
+          "#a585da",
+          "#daa026",
+          "#474e1d",
+          "#1095e3",
+          "#0bd5ee",
+          "#2a8329"
+        ];
+    // grid of 100 circles
+    var radius = 20;
+    var spacing = 50;
+    var center = new Point(0, 0);
+    for (var y = 0; y < 10; y++) {
+      center.y += spacing;
+      for (var x = 0; x < 10; x++) {
+        center.x += spacing;
+        var circle = new Path.Circle(center, radius);
+        circle.fillColor = colors[y];
+      }
+      center.x = 0;
+    }
   </script>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
