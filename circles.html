@@ -5,9 +5,9 @@
   <title>Patatap Clone</title>
   <meta name="description" content="DESCRIPTION">
   <script type="text/javascript" src="assets/js/paper-full.js"></script>
+  <script type="text/javascript" src="assets/js/howler.js"></script>
   <script type="text/paperscript" canvas="myCanvas">
 
-    var radius = 50;
     var keyData = {
       a: {
         color: new Color(Math.random(), Math.random(), Math.random()),
@@ -166,28 +166,34 @@
         })
       }
     }
+
+    // Global variables
+    var radius = 200;
     var circles = [];
 
     function onKeyDown(event) {
-      // random color
-      var color = new Color(Math.random(), Math.random(), Math.random());
-      // random location
-      var center = new Point(view.size) * Point.random();
-      // generate circle
-      var circle = new Path.Circle(center, radius);
-      // color the circle
-      circle.fillColor = color;
-      // add this circle to the family
-      circles.push(circle);
+      if(keyData[event.key]) {
+        var center = new Point(view.size) * Point.random();
+        var circle = new Path.Circle(center, radius);
+        circle.fillColor = keyData[event.key].color;
+        keyData[event.key].sound.play();
+        circles.push(circle);
+      }
     }
 
     // animate colors
     function onFrame(event){
       for(var i = 0; i < circles.length; i++) {
         circles[i].fillColor.hue += 1;
-        circles[i].scale(0.85);
+        circles[i].scale(0.9);
+        if(circles[i].area < 1) {
+          circles[i].remove();
+          circles.splice(i, 1);
+          console.log(circles);
+        }
       }
     }
+
   </script>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
