@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Patatap Clone</title>
-  <meta name="description" content="DESCRIPTION">
+  <meta name="description" content="Clone of Patatap from Udemy">
   <script type="text/javascript" src="assets/js/paper-full.js"></script>
   <script type="text/javascript" src="assets/js/howler.js"></script>
   <script type="text/paperscript" canvas="myCanvas">
+
+  /********************************
+
+    The code is loaded here in html file because we get a "Same-origin policy"
+    issue otherwise. You can get around this by running python -m SimpleHTTPServer
+    and visiting the address in your webrowser
+
+  ********************************/
 
     var keyData = {
       a: {
@@ -171,29 +179,29 @@
     var radius = 200;
     var circles = [];
 
+    // Make cirlces and play sounds
     function onKeyDown(event) {
       if(keyData[event.key]) {
-        var center = new Point(view.size) * Point.random();
-        var circle = new Path.Circle(center, radius);
-        circle.fillColor = keyData[event.key].color;
-        keyData[event.key].sound.play();
-        circles.push(circle);
+        // make circle
+        var center = new Point(view.size) * Point.random(); // calc random center
+        var circle = new Path.Circle(center, radius); // make the circle
+        circle.fillColor = keyData[event.key].color; // paint it
+        keyData[event.key].sound.play(); // play sound
+        circles.push(circle); // add to the cirlces array
       }
     }
 
     // animate colors
-    function onFrame(event){
+    function onFrame(event){ // onFrame is the animate function by paper.js
       for(var i = 0; i < circles.length; i++) {
-        circles[i].fillColor.hue += 1;
-        circles[i].scale(0.9);
-        if(circles[i].area < 1) {
-          circles[i].remove();
-          circles.splice(i, 1);
-          console.log(circles);
+        circles[i].fillColor.hue += 1; // animate the hue
+        circles[i].scale(0.9); // animate the size
+        if(circles[i].area < 1) { // if circle is not visiable
+          circles[i].remove(); // remove from project
+          circles.splice(i, 1); // remove circle from global array of cirlces
         }
       }
     }
-
   </script>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -201,4 +209,4 @@
 <body>
   <canvas id="myCanvas" resize></canvas>
 </body>
- </html>
+</html>
